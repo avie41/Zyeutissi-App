@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  KeyboardAvoidingView,
   Platform,
   SafeAreaView,
   ScrollView,
@@ -27,6 +28,7 @@ const Block = (props: IBlockProps) => {
     row,
     safe,
     keyboard,
+    WithoutScroll,
     scroll,
     color,
     gradient,
@@ -185,6 +187,14 @@ const Block = (props: IBlockProps) => {
         {children}
       </KeyboardAwareScrollView>
     );
+  }
+  if(WithoutScroll){
+    return (
+      <KeyboardAvoidingView {...blockID} {...rest} style={blockStyles}>
+        {children}
+      </KeyboardAvoidingView>
+    );
+
   }
 
   if (scroll) {

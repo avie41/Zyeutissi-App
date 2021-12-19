@@ -63,6 +63,7 @@
     "profile": "Profile",
     "settings": "Settings",
     "register": "Create account",
+    "login": "login account",
     "extra": "Extra - Automotive"
   },
   "navigation": {
@@ -86,6 +87,7 @@
   },
   "menu": {
     "started": "Getting Started",
+    "website": "Website",
     "documentation": "Documentation"
   },
   "home": {

@@ -2,9 +2,9 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {KeyboardAvoidingView, Linking, Platform, View} from 'react-native';
 import {useNavigation} from '@react-navigation/core';
 
-import {useData, useTheme, useTranslation} from '../hooks/';
+import {useData, useTheme, useTranslation} from '../hooks';
 import * as regex from '../constants/regex';
-import {Block, Button, Input, Image, Text, Checkbox} from '../components/';
+import {Block, Button, Input, Image, Text, Checkbox} from '../components';
 import { block } from 'react-native-reanimated';
 
 const isAndroid = Platform.OS === 'android';
@@ -108,26 +108,6 @@ const Register = () => {
             </Block>  
               {/* form inputs */}
               <Block paddingHorizontal={sizes.sm}>
-              <Block>
-                  <Image 
-                  resizeMode='stretch'
-                  source={assets.profile}
-                  height={30}
-                  width={35}
-                  color={colors.icon}
-                  style={{position: 'absolute' ,top:33,left:-5}}
-                  />
-                <Input
-                  autoCapitalize="none"
-                  marginBottom={sizes.m}
-                  paddingLeft={40}
-                  label={t('common.name')}
-                  placeholder={t('common.namePlaceholder')}
-                  success={Boolean(registration.name && isValid.name)}
-                  danger={Boolean(registration.name && !isValid.name)}
-                  onChangeText={(value) => handleChange({name: value})}
-                />
-                </Block>
                <Block>
                   <Image 
                   resizeMode='stretch'

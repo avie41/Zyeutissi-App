@@ -6,7 +6,6 @@ import {
   ViewStyle,
   StyleSheet,
 } from 'react-native';
-import * as Haptics from 'expo-haptics';
 
 import {ISwitchProps} from '../constants/types';
 import useTheme from '../hooks/useTheme';
@@ -22,7 +21,6 @@ const Switch = ({
   switchStyle,
   style,
   onPress,
-  haptic = true,
   ...props
 }: ISwitchProps) => {
   const [isChecked, setChecked] = useState(checked);
@@ -35,12 +33,7 @@ const Switch = ({
   const handleToggle = useCallback(() => {
     setChecked(!isChecked);
     onPress?.(!isChecked);
-
-    /* haptic feedback onPress */
-    if (haptic) {
-      Haptics.selectionAsync();
-    }
-  }, [isChecked, haptic, setChecked, onPress]);
+  }, [isChecked, setChecked, onPress]);
 
   useEffect(() => {
     Animated.timing(animation, {

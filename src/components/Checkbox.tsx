@@ -1,8 +1,6 @@
 import React, {useCallback, useState} from 'react';
 import {Platform, Pressable} from 'react-native';
 
-import * as Haptics from 'expo-haptics';
-
 import {useTheme} from '../hooks/';
 import Block from '../components/Block';
 import Image from '../components/Image';
@@ -10,7 +8,6 @@ import {ICheckboxProps} from '../constants/types';
 
 const Checkbox = ({
   onPress,
-  haptic = true,
   id = 'Checkbox',
   ...props
 }: ICheckboxProps) => {
@@ -20,12 +17,7 @@ const Checkbox = ({
   const handlePress = useCallback(() => {
     onPress?.(!checked);
     setChecked(!checked);
-
-    /* haptic feedback onPress */
-    if (haptic) {
-      Haptics.selectionAsync();
-    }
-  }, [checked, haptic, setChecked, onPress]);
+  }, [checked, setChecked, onPress]);
 
   // generate component testID or accessibilityLabel based on Platform.OS
   const checkboxID =
