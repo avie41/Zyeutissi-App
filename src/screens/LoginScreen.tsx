@@ -2,7 +2,6 @@
 import React,{useState} from 'react';
 import { StyleSheet,Image, Text, View, TextInput, TouchableOpacity, Switch } from 'react-native';
 import {Asset} from 'expo-asset';
-import LinearGradient from 'react-native-linear-gradient';
 const LoginScreen = () => {
   // Gestion du switch, à utiliser pour le mode anglais ou français
   // false -> default (français)
@@ -22,7 +21,7 @@ const LoginScreen = () => {
           onValueChange={changeLanguage}
           value={language}
         />
-        <Text style={styles.forgot}>{language ? "EN" : "FR"}</Text>
+        <Text style={styles.forgot}>{language ? "En" : "Fr"}</Text>
       </View>
       <Image
         style={styles.logoImage}
