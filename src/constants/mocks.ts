@@ -171,7 +171,6 @@ export const CATEGORIES: ICategory[] = [
   {id: 1, name: 'Populaire'},
   {id: 2, name: 'Récent'},
   {id: 3, name: 'Paysage'},
-  {id: 4, name: 'Divers'},
 ];
 
 // article options
