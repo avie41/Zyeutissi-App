@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {KeyboardAvoidingView, Linking, Platform, View} from 'react-native';
 import {useNavigation} from '@react-navigation/core';
-
+import {registerNewUser} from '../services/firebaseMethods';
 import {useData, useTheme, useTranslation} from '../hooks/';
 import * as regex from '../constants/regex';
 import {Block, Button, Input, Image, Text, Checkbox} from '../components/';
@@ -10,32 +10,32 @@ import { block } from 'react-native-reanimated';
 const isAndroid = Platform.OS === 'android';
 
 interface IRegistration {
-  name: string;
+  fullName: string;
   email: string;
   password: string;
-  agreed: boolean;
+  // agreed: boolean;
 }
 interface IRegistrationValidation {
-  name: boolean;
+  fullName: boolean;
   email: boolean;
   password: boolean;
-  agreed: boolean;
+  // agreed: boolean;
 }
 
 const Register = () => {
   const {t} = useTranslation();
   const navigation = useNavigation();
   const [isValid, setIsValid] = useState<IRegistrationValidation>({
-    name: false,
+    fullName: false,
     email: false,
     password: false,
-    agreed: false,
+    // agreed: false,
   });
   const [registration, setRegistration] = useState<IRegistration>({
-    name: '',
+    fullName: '',
     email: '',
     password: '',
-    agreed: false,
+    // agreed: false,
   });
   const {assets, colors, gradients, sizes} = useTheme();
 
@@ -48,24 +48,23 @@ const Register = () => {
 
   const handleSignUp = useCallback(() => {
     if (!Object.values(isValid).includes(false)) {
-      /** send/save registratin data */
-      console.log('handleSignUp', registration);
+      registerNewUser(registration.fullName,registration.email,registration.password);
     }
   }, [isValid, registration]);
 
   useEffect(() => {
     setIsValid((state) => ({
       ...state,
-      name: regex.name.test(registration.name),
+      fullName: regex.name.test(registration.fullName),
       email: regex.email.test(registration.email),
       password: regex.password.test(registration.password),
-      agreed: registration.agreed,
+      // agreed: registration.agreed,
     }));
   }, [registration, setIsValid]);
 
   return (
     <Block safe marginTop={sizes.md}>
-      <Block paddingHorizontal={sizes.s}>
+      <Block paddingHorizontal={sizes.sm} paddingVertical={sizes.sm}>
         <Block flex={0} style={{zIndex: 0}}>    
             <Button
               row
@@ -103,7 +102,8 @@ const Register = () => {
               width={231}
               height={231}
               source={assets.zyeutissi}
-              marginTop={sizes.m}
+              marginTop={sizes.xs}
+              marginBottom={sizes.m}
             />
             </Block>  
               {/* form inputs */}
@@ -123,9 +123,9 @@ const Register = () => {
                   paddingLeft={40}
                   label={t('common.name')}
                   placeholder={t('common.namePlaceholder')}
-                  success={Boolean(registration.name && isValid.name)}
-                  danger={Boolean(registration.name && !isValid.name)}
-                  onChangeText={(value) => handleChange({name: value})}
+                  success={Boolean(registration.fullName && isValid.fullName)}
+                  danger={Boolean(registration.fullName && !isValid.fullName)}
+                  onChangeText={(value) => handleChange({fullName: value})}
                 />
                 </Block>
                <Block>
@@ -161,7 +161,7 @@ const Register = () => {
                 <Input
                   secureTextEntry
                   autoCapitalize="none"
-                  marginBottom={sizes.m}
+                  marginBottom={sizes.s}
                   label={t('common.password')}
                   paddingLeft={40}
                   placeholder={t('common.passwordPlaceholder')}
@@ -172,7 +172,7 @@ const Register = () => {
                 </Block>
               </Block>
               {/* checkbox terms */}
-              <Block row flex={0} align="center" paddingHorizontal={sizes.sm}>
+{/*               <Block row flex={0} align="center" paddingHorizontal={sizes.sm}>
                 <Checkbox
                   marginRight={sizes.sm}
                   checked={registration?.agreed}
@@ -188,15 +188,17 @@ const Register = () => {
                     {t('common.terms')}
                   </Text>
                 </Text>
-              </Block>
+              </Block> */}
               <Button
                 onPress={handleSignUp}
                 marginVertical={sizes.md}
                 marginHorizontal={sizes.sm}
                 gradient={gradients.primary}
-                disabled={Object.values(isValid).includes(false)}>
+                // Object.values(isValid).includes(false)
+                disabled={Object.values(isValid).includes(false)}
+                >
                 <Text bold white transform="uppercase">
-                  {t('common.signin')}
+                  {t('common.signup')}
                 </Text>
               </Button>
           </Block>

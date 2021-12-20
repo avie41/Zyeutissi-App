@@ -1,4 +1,5 @@
 import React, {useCallback, useState} from 'react';
+import Icon from 'react-native-ionicons'
 import {
   Image,
   TextInput,
@@ -13,6 +14,8 @@ import Text from './Text';
 
 import useTheme from '../hooks/useTheme';
 import {IInputProps} from '../constants/types';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const Input = ({
   id = 'Input',
@@ -40,6 +43,9 @@ const Input = ({
   marginLeft,
   onFocus,
   onBlur,
+  isPassword,
+  hidePassword,
+  setHidePassword,
   ...props
 }: IInputProps) => {
   const {assets, colors, sizes} = useTheme();
@@ -170,6 +176,11 @@ const Input = ({
               tintColor: colors.success,
             }}
           />
+        )}
+        {isPassword && (
+          <TouchableOpacity style={{position:'absolute', right:15}}>
+            <Image source={hidePassword? assets.eyeOff: assets.eye}/>
+          </TouchableOpacity>
         )}
       </Block>
     </Block>

@@ -3,8 +3,7 @@ import {Platform, StatusBar} from 'react-native';
 import {useFonts} from 'expo-font';
 import AppLoading from 'expo-app-loading';
 import {NavigationContainer, DefaultTheme} from '@react-navigation/native';
-import * as firebase from '@react-native-firebase/app';
-import apiKeys from '../../config/firebaseKey';
+
 
 import Menu from './Menu';
 import {useData, ThemeProvider, TranslationProvider} from '../hooks';
@@ -18,13 +17,6 @@ export default () => {
       StatusBar.setBarStyle('default');
     };
   }, [isDark]);
-
-  if (!firebase.apps.length) {
-    console.log('Connected with Firebase')
-    firebase.utils.initializeApp(apiKeys.firebaseConfig);
-  }
-
-
 
   // load custom fonts
   const [fontsLoaded] = useFonts({

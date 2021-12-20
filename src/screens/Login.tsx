@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {KeyboardAvoidingView, Linking, Platform, View} from 'react-native';
 import {useNavigation} from '@react-navigation/core';
-
+import { signIn } from '../services/firebaseMethods';
 import {useData, useTheme, useTranslation} from '../hooks';
 import * as regex from '../constants/regex';
 import {Block, Button, Input, Image, Text, Checkbox} from '../components';
@@ -10,32 +10,25 @@ import { block } from 'react-native-reanimated';
 const isAndroid = Platform.OS === 'android';
 
 interface IRegistration {
-  name: string;
   email: string;
   password: string;
-  agreed: boolean;
 }
 interface IRegistrationValidation {
-  name: boolean;
   email: boolean;
   password: boolean;
-  agreed: boolean;
 }
 
 const Register = () => {
   const {t} = useTranslation();
   const navigation = useNavigation();
+  const [hidePassword, setHidePassword] = useState(true);
   const [isValid, setIsValid] = useState<IRegistrationValidation>({
-    name: false,
     email: false,
-    password: false,
-    agreed: false,
+    password: false
   });
   const [registration, setRegistration] = useState<IRegistration>({
-    name: '',
     email: '',
-    password: '',
-    agreed: false,
+    password: ''
   });
   const {assets, colors, gradients, sizes} = useTheme();
 
@@ -46,26 +39,25 @@ const Register = () => {
     [setRegistration],
   );
 
-  const handleSignUp = useCallback(() => {
+  const handleSignIn = useCallback(() => {
     if (!Object.values(isValid).includes(false)) {
       /** send/save registratin data */
-      console.log('handleSignUp', registration);
+      signIn(registration.email, registration.password);
+      navigation.navigate('Home');
     }
   }, [isValid, registration]);
 
   useEffect(() => {
     setIsValid((state) => ({
       ...state,
-      name: regex.name.test(registration.name),
       email: regex.email.test(registration.email),
       password: regex.password.test(registration.password),
-      agreed: registration.agreed,
     }));
   }, [registration, setIsValid]);
 
   return (
     <Block safe marginTop={sizes.md}>
-      <Block paddingHorizontal={sizes.s}>
+      <Block paddingHorizontal={sizes.sm} paddingVertical={sizes.sm}>
         <Block flex={0} style={{zIndex: 0}}>    
             <Button
               row
@@ -114,6 +106,7 @@ const Register = () => {
                     source={assets.mail}
                     height={25}
                     width={23}
+                    marginBottom={sizes.m}
                     color={colors.icon}
                     style={{position: 'absolute' ,top:40}}
                   />
@@ -139,7 +132,8 @@ const Register = () => {
                     style={{position: 'absolute' ,top:40}}
                   />
                 <Input
-                  secureTextEntry
+                  isPassword
+                  secureTextEntry = {hidePassword}
                   autoCapitalize="none"
                   marginBottom={sizes.m}
                   label={t('common.password')}
@@ -148,35 +142,29 @@ const Register = () => {
                   onChangeText={(value) => handleChange({password: value})}
                   success={Boolean(registration.password && isValid.password)}
                   danger={Boolean(registration.password && !isValid.password)}
+                  hidePassword = {hidePassword}
+                  setHidePassword = {setHidePassword}
                 />
                 </Block>
               </Block>
-              {/* checkbox terms */}
-              <Block row flex={0} align="center" paddingHorizontal={sizes.sm}>
-                <Checkbox
-                  marginRight={sizes.sm}
-                  checked={registration?.agreed}
-                  onPress={(value) => handleChange({agreed: value})}
-                />
-                <Text paddingRight={sizes.s}>
-                  {t('common.agree')}
-                  <Text
-                    semibold
-                    onPress={() => {
-                      Linking.openURL('https://zyeutissi.fr/');
-                    }}>
-                    {t('common.terms')}
-                  </Text>
-                </Text>
-              </Block>
               <Button
-                onPress={handleSignUp}
-                marginVertical={sizes.md}
+                onPress={handleSignIn}
+                marginVertical={sizes.sm}
                 marginHorizontal={sizes.sm}
                 gradient={gradients.primary}
                 disabled={Object.values(isValid).includes(false)}>
                 <Text bold white transform="uppercase">
                   {t('common.signin')}
+                </Text>
+              </Button>
+              <Button
+                primary
+                outlined
+                shadow={!isAndroid}
+                marginHorizontal={sizes.sm}
+                onPress={() => navigation.navigate('Register')}>
+                <Text bold primary transform="uppercase">
+                  {t('common.signup')}
                 </Text>
               </Button>
           </Block>
