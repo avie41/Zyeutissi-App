@@ -21,7 +21,9 @@
     "email": "Email",
     "emailPlaceholder": "Saisir votre adresse mail",
     "password": "Mot de passe",
+    "forgotPassword": "Mot de passe oublié ?",
     "passwordPlaceholder": "Saisir un mot de passe",
+    "resetPassword": "Réinitialiser mot de passe",
     "agree": "Je suis d'accord avec les ",
     "terms": "Conditions générales",
     "signup": "S'enregistrer",
@@ -64,7 +66,8 @@
   "menu": {
     "started": "Comment ça marche",
     "website": "Site Web",
-    "documentation": "Documentation"
+    "documentation": "Documentation",
+    "concept": "Concept"
   },
   "home": {
     "title": "Zyeutissi App",

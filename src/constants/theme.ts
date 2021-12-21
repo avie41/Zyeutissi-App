@@ -47,6 +47,7 @@ export const ICONS: ThemeIcons = {
   components: require('../assets/icons/components.png'),
   document: require('../assets/icons/document.png'),
   documentation: require('../assets/icons/documentation.png'),
+  help: require('../assets/icons/help.png'),
   extras: require('../assets/icons/extras.png'),
   flight: require('../assets/icons/flight.png'),
   home: require('../assets/icons/home.png'),
@@ -69,8 +70,8 @@ export const ICONS: ThemeIcons = {
   train: require('../assets/icons/train.png'),
   users: require('../assets/icons/users.png'),
   warning: require('../assets/icons/warning.png'),
-  eye: require('../assets/icons/eye.svg'),
-  eyeOff: require('../assets/icons/eye-off.svg'),
+  eye: require('../assets/icons/eye.png'),
+  eyeOff: require('../assets/icons/eye-off.png'),
 };
 
 export const ASSETS: ThemeAssets = {
@@ -142,7 +143,7 @@ export const FONTS: ThemeFonts = {
 
 export const LINE_HEIGHTS: ThemeLineHeights = {
   // font lineHeight
-  text: 22,
+  text: 10,
   h1: 60,
   h2: 55,
   h3: 43,

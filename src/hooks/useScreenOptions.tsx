@@ -21,23 +21,31 @@ export default () => {
   const {t} = useTranslation();
   const {user} = useData();
   const navigation = useNavigation();
-  const {icons, colors, gradients, sizes} = useTheme();
+  const {assets, icons, colors, gradients, sizes} = useTheme();
 
   const menu = {
     headerStyle: {elevation: 0},
-    headerTitleAlign: 'left',
-    headerTitleContainerStyle: {marginLeft: -sizes.sm},
+    headerTitleAlign: 'center',
+    headerTitleContainerStyle: {paddingTop:sizes.md},
     headerLeftContainerStyle: {paddingLeft: sizes.s},
     headerRightContainerStyle: {paddingRight: sizes.s},
     cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
-    headerTitle: () => (<Text p>Zyeutissi</Text>),
+    headerTitle: () => (<Image
+      width={100}
+      height={100}
+      source={assets.zyeutissi}
+      marginTop={sizes.md}
+      marginBottom={sizes.sm}
+      marginHorizontal={sizes.xl}
+    />
+      ),
     headerLeft: () => (
-      <Button onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}>
+      <Button marginTop={sizes.padding} onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}>
         <Image source={icons.menu} radius={0} color={colors.icon} />
       </Button>
     ),
     headerRight: () => (
-      <Block row flex={0} align="center" marginRight={sizes.padding}>
+      <Block row flex={0} align="center" marginRight={sizes.padding} marginTop={sizes.padding}>
         <TouchableOpacity
           style={{marginRight: sizes.sm}}
           onPress={() =>
@@ -90,22 +98,6 @@ export default () => {
       headerTitle: () => (
         <Text p white>
           {t('navigation.components')}
-        </Text>
-      ),
-      headerRight: () => null,
-      headerLeft: () => (
-        <Button
-          onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}>
-          <Image source={icons.menu} radius={0} color={colors.white} />
-        </Button>
-      ),
-    },
-    pro: {
-      ...menu,
-      headerTransparent: true,
-      headerTitle: () => (
-        <Text p white semibold>
-          {t('pro.title')}
         </Text>
       ),
       headerRight: () => null,

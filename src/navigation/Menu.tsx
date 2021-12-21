@@ -187,6 +187,34 @@ const DrawerContent = (
           <Text p color={labelColor}>
             {t('menu.website')}
           </Text>
+        </Button>
+        <Button
+          row
+          justify="flex-start"
+          marginBottom={sizes.s}
+          onPress={() =>
+            navigation.navigate('HowItWorks')
+          }>
+          <Block
+            flex={0}
+            radius={6}
+            align="center"
+            justify="center"
+            width={sizes.md}
+            height={sizes.md}
+            marginRight={sizes.s}
+            gradient={gradients.white}>
+            <Image
+              radius={0}
+              width={18}
+              height={18}
+              color={colors.black}
+              source={assets.help}
+            />
+          </Block>
+          <Text p color={labelColor}>
+            {t('menu.concept')}
+          </Text>
         </Button> 
       </Block>
     </DrawerContentScrollView>

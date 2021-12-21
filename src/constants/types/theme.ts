@@ -137,6 +137,7 @@ export interface ThemeSizes {
   h4: number;
   h5: number;
   p: number;
+  cat: number;
 
   buttonBorder: number;
   buttonRadius: number;
@@ -223,6 +224,7 @@ export interface ThemeIcons {
   components: ImageSourcePropType;
   document: ImageSourcePropType;
   documentation: ImageSourcePropType;
+  help: ImageSourcePropType;
   extras: ImageSourcePropType;
   flight: ImageSourcePropType;
   home: ImageSourcePropType;

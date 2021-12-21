@@ -1,11 +1,10 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {KeyboardAvoidingView, Linking, Platform, View} from 'react-native';
+import {TouchableOpacity, KeyboardAvoidingView, Linking, Platform, View} from 'react-native';
 import {useNavigation} from '@react-navigation/core';
 import { signIn } from '../services/firebaseMethods';
-import {useData, useTheme, useTranslation} from '../hooks';
+import {useTheme, useTranslation} from '../hooks';
 import * as regex from '../constants/regex';
 import {Block, Button, Input, Image, Text, Checkbox} from '../components';
-import { block } from 'react-native-reanimated';
 
 const isAndroid = Platform.OS === 'android';
 
@@ -18,10 +17,11 @@ interface IRegistrationValidation {
   password: boolean;
 }
 
-const Register = () => {
+const Login = () => {
   const {t} = useTranslation();
   const navigation = useNavigation();
-  const [hidePassword, setHidePassword] = useState(true);
+  // TODO toggle eye to be implemented
+  //const [hidePassword, setHidePassword] = useState(true);
   const [isValid, setIsValid] = useState<IRegistrationValidation>({
     email: false,
     password: false
@@ -95,7 +95,8 @@ const Register = () => {
               width={231}
               height={231}
               source={assets.zyeutissi}
-              marginTop={sizes.m}
+              marginTop={sizes.xs}
+              marginBottom={sizes.m}
             />
             </Block>  
               {/* form inputs */}
@@ -132,8 +133,7 @@ const Register = () => {
                     style={{position: 'absolute' ,top:40}}
                   />
                 <Input
-                  isPassword
-                  secureTextEntry = {hidePassword}
+                  secureTextEntry
                   autoCapitalize="none"
                   marginBottom={sizes.m}
                   label={t('common.password')}
@@ -142,9 +142,12 @@ const Register = () => {
                   onChangeText={(value) => handleChange({password: value})}
                   success={Boolean(registration.password && isValid.password)}
                   danger={Boolean(registration.password && !isValid.password)}
-                  hidePassword = {hidePassword}
-                  setHidePassword = {setHidePassword}
                 />
+                <TouchableOpacity onPress={() => navigation.navigate('ResetPassword')}>
+                <Text align='center'>
+                  {t('common.forgotPassword')}
+                </Text>
+                </TouchableOpacity>
                 </Block>
               </Block>
               <Button
@@ -174,4 +177,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Login;

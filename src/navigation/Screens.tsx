@@ -1,8 +1,9 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 
-import { Home, Profile, Login, Register, ToDevelop} from '../screens';
+import { Home, Profile, Login, ResetPassword, Register, ToDevelop, HowItWorks} from '../screens';
 import {useScreenOptions, useTranslation} from '../hooks';
+import { resetPassword } from '../services/firebaseMethods';
 
 const Stack = createStackNavigator();
 
@@ -33,6 +34,18 @@ export default () => {
       <Stack.Screen
         name="Login"
         component={Login}
+        options={{headerShown: false}}
+      />
+
+      <Stack.Screen
+        name="ResetPassword"
+        component={ResetPassword}
+        options={{headerShown: false}}
+      />
+
+      <Stack.Screen
+        name="HowItWorks"
+        component={HowItWorks}
         options={{headerShown: false}}
       />
 

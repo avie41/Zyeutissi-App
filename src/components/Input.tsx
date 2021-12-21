@@ -43,9 +43,6 @@ const Input = ({
   marginLeft,
   onFocus,
   onBlur,
-  isPassword,
-  hidePassword,
-  setHidePassword,
   ...props
 }: IInputProps) => {
   const {assets, colors, sizes} = useTheme();
@@ -176,11 +173,6 @@ const Input = ({
               tintColor: colors.success,
             }}
           />
-        )}
-        {isPassword && (
-          <TouchableOpacity style={{position:'absolute', right:15}}>
-            <Image source={hidePassword? assets.eyeOff: assets.eye}/>
-          </TouchableOpacity>
         )}
       </Block>
     </Block>

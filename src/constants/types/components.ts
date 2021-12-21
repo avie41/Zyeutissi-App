@@ -592,9 +592,6 @@ export interface IInputProps extends TextInputProps, ISpacing {
    * @see https://reactnative.dev/docs/textinput#editable
    */
   disabled?: boolean;
-  isPassword?: boolean;
-  hidePassword?: boolean;
-  setHidePassword?: React.Dispatch<React.SetStateAction<boolean>>;
   /**
    * Renders the label top text
    */
@@ -841,6 +838,7 @@ export interface ITextProps extends TextProps, ISpacing {
    * @see https://reactnative.dev/docs/text-style-props#fontsize
    */
   p?: boolean;
+  cat?: boolean;
   /**
    * Renders a Text with custom textAlign
    * @see https://reactnative.dev/docs/text-style-props#textalign

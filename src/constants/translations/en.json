@@ -30,7 +30,9 @@
     "email": "Email",
     "emailPlaceholder": "Enter your email address",
     "password": "Password",
+    "forgotPassword": "forgot password ?",
     "passwordPlaceholder": "Enter a password",
+    "resetPassword": "Reset password",
     "agree": "I agree with the ",
     "terms": "Terms and Conditions",
     "signup": "Sign Up",
@@ -88,7 +90,8 @@
   "menu": {
     "started": "Getting Started",
     "website": "Website",
-    "documentation": "Documentation"
+    "documentation": "Documentation",
+    "concept": "Concept"
   },
   "home": {
     "title": "Soft UI",

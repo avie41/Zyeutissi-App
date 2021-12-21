@@ -26,8 +26,17 @@ export async function signIn(email: string, password: string) {
       .auth()
       .signInWithEmailAndPassword(email, password);
   } catch (err:any) {
-    Alert.alert("There is something wrong!", err.message);
+    Alert.alert("Erreur lors de l'enregistrement du nouveau compte", err.message);
   }
+}
+export async function resetPassword(email: string){
+  try {
+    await firebase
+       .auth()
+       .sendPasswordResetEmail(email);
+   } catch (err:any) {
+     Alert.alert("Erreur lors de l'envoi du mail de réinitialisation", err.message);
+   }
 }
 
 export async function loggingOut() {
