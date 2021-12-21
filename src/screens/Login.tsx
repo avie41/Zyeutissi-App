@@ -1,10 +1,11 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {TouchableOpacity, KeyboardAvoidingView, Linking, Platform, View} from 'react-native';
 import {useNavigation} from '@react-navigation/core';
-import { signIn } from '../services/firebaseMethods';
+import { signIn, signInWithGoogle } from '../services/firebaseMethods';
 import {useTheme, useTranslation} from '../hooks';
 import * as regex from '../constants/regex';
 import {Block, Button, Input, Image, Text, Checkbox} from '../components';
+import firebase from 'firebase';
 
 const isAndroid = Platform.OS === 'android';
 
@@ -46,6 +47,12 @@ const Login = () => {
       navigation.navigate('Home');
     }
   }, [isValid, registration]);
+
+  const handleSignUpWithGoogle = () => {
+    var provider = new firebase.auth.GoogleAuthProvider();
+    signInWithGoogle(provider);
+    navigation.navigate('Home');
+  }
 
   useEffect(() => {
     setIsValid((state) => ({
@@ -150,16 +157,29 @@ const Login = () => {
                 </TouchableOpacity>
                 </Block>
               </Block>
+              <Block row paddingVertical={sizes.m}>
               <Button
-                onPress={handleSignIn}
-                marginVertical={sizes.sm}
+                onPress={handleSignIn}                
                 marginHorizontal={sizes.sm}
+                height={50}
+                width={200}
                 gradient={gradients.primary}
                 disabled={Object.values(isValid).includes(false)}>
                 <Text bold white transform="uppercase">
                   {t('common.signin')}
                 </Text>
               </Button>
+              
+              <Button radius={sizes.m} style={{width:5, height:5}} outlined color={colors.blue} shadow={!isAndroid} onPress={handleSignUpWithGoogle}>
+                  <Image
+                  style={{alignSelf:'center'}}
+                    source={assets.google}
+                    height={sizes.m}
+                    width={sizes.m}
+                    color={colors.blue}
+                  />
+              </Button>
+              </Block>
               <Button
                 primary
                 outlined

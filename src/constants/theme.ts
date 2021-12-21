@@ -143,7 +143,7 @@ export const FONTS: ThemeFonts = {
 
 export const LINE_HEIGHTS: ThemeLineHeights = {
   // font lineHeight
-  text: 10,
+  text: 22,
   h1: 60,
   h2: 55,
   h3: 43,
