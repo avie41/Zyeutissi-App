@@ -193,7 +193,7 @@ const DrawerContent = (
           justify="flex-start"
           marginBottom={sizes.s}
           onPress={() =>
-            navigation.navigate('HowItWorks')
+            navigation.navigate('Concept')
           }>
           <Block
             flex={0}

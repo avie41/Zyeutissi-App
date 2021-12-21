@@ -55,7 +55,7 @@ const HowItWorks = () => {
               source={assets.zyeutissi}
               marginBottom={sizes.s}
             />
-            <Text  h4 bold paddingBottom={sizes.l} align='center' color={colors.blue}>Votre éditeur de vidéo "maison"</Text>
+            <Text  h4  paddingBottom={sizes.l} align='center' color={colors.blue}>Votre éditeur de vidéo "maison"</Text>
   
             <Text  h5 paddingBottom={sizes.s} paddingRight={100}  color={colors.text}>Présentation du concept</Text>
             <Divider style={{alignSelf : 'stretch', height:5, maxWidth:35, marginLeft:3, backgroundColor : colors.blue}} />
