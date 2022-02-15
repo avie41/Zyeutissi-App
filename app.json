@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Zyeutissi-App",
-    "slug": "Zyeutissi-App",
+    "name": "zyeutissi-app",
+    "slug": "zyeutissi-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
