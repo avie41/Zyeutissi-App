@@ -23,12 +23,12 @@ const ScreensStack = () => {
 
   const scale = animation.interpolate({
     inputRange: [0, 1],
-    outputRange: [1, 0.88],
+    outputRange: [1, 1],
   });
 
   const borderRadius = animation.interpolate({
     inputRange: [0, 1],
-    outputRange: [0, 16],
+    outputRange: [0, 1],
   });
 
   const animatedStyle = {
@@ -51,8 +51,6 @@ const ScreensStack = () => {
         {
           flex: 1,
           overflow: 'hidden',
-          borderColor: colors.card,
-          borderWidth: isDrawerOpen ? 1 : 0,
         },
       ])}>
       {/*  */}
