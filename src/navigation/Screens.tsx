@@ -1,9 +1,8 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 
-import { Home, Profile, Register, ToDevelop} from '../screens';
+import { Home, Profile, Login, ResetPassword, Register, ToDevelop, Concept} from '../screens';
 import {useScreenOptions, useTranslation} from '../hooks';
-import LoginScreen from '../screens/LoginScreen';
 
 const Stack = createStackNavigator();
 
@@ -28,6 +27,24 @@ export default () => {
       <Stack.Screen
         name="Register"
         component={Register}
+        options={{headerShown: false}}
+      />
+
+      <Stack.Screen
+        name="Login"
+        component={Login}
+        options={{headerShown: false}}
+      />
+
+      <Stack.Screen
+        name="ResetPassword"
+        component={ResetPassword}
+        options={{headerShown: false}}
+      />
+
+      <Stack.Screen
+        name="Concept"
+        component={Concept}
         options={{headerShown: false}}
       />
 

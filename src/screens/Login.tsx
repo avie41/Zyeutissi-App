@@ -1,41 +1,35 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {KeyboardAvoidingView, Linking, Platform, View} from 'react-native';
+import {TouchableOpacity, KeyboardAvoidingView, Linking, Platform, View} from 'react-native';
 import {useNavigation} from '@react-navigation/core';
-import {registerNewUser} from '../services/firebaseMethods';
-import {useData, useTheme, useTranslation} from '../hooks/';
+import { signIn, signInWithGoogle } from '../services/firebaseMethods';
+import {useTheme, useTranslation} from '../hooks';
 import * as regex from '../constants/regex';
-import {Block, Button, Input, Image, Text, Checkbox} from '../components/';
-import { block } from 'react-native-reanimated';
+import {Block, Button, Input, Image, Text, Checkbox} from '../components';
+import firebase from 'firebase';
 
 const isAndroid = Platform.OS === 'android';
 
 interface IRegistration {
-  fullName: string;
   email: string;
   password: string;
-  // agreed: boolean;
 }
 interface IRegistrationValidation {
-  fullName: boolean;
   email: boolean;
   password: boolean;
-  // agreed: boolean;
 }
 
-const Register = () => {
+const Login = () => {
   const {t} = useTranslation();
   const navigation = useNavigation();
+  // TODO toggle eye to be implemented
+  //const [hidePassword, setHidePassword] = useState(true);
   const [isValid, setIsValid] = useState<IRegistrationValidation>({
-    fullName: false,
     email: false,
-    password: false,
-    // agreed: false,
+    password: false
   });
   const [registration, setRegistration] = useState<IRegistration>({
-    fullName: '',
     email: '',
-    password: '',
-    // agreed: false,
+    password: ''
   });
   const {assets, colors, gradients, sizes} = useTheme();
 
@@ -46,19 +40,25 @@ const Register = () => {
     [setRegistration],
   );
 
-  const handleSignUp = useCallback(() => {
+  const handleSignIn = useCallback(() => {
     if (!Object.values(isValid).includes(false)) {
-      registerNewUser(registration.fullName,registration.email,registration.password);
+      /** send/save registratin data */
+      signIn(registration.email, registration.password);
+      navigation.navigate('Home');
     }
   }, [isValid, registration]);
+
+  const handleSignUpWithGoogle = () => {
+    var provider = new firebase.auth.GoogleAuthProvider();
+    signInWithGoogle(provider);
+    navigation.navigate('Home');
+  }
 
   useEffect(() => {
     setIsValid((state) => ({
       ...state,
-      fullName: regex.name.test(registration.fullName),
       email: regex.email.test(registration.email),
       password: regex.password.test(registration.password),
-      // agreed: registration.agreed,
     }));
   }, [registration, setIsValid]);
 
@@ -108,32 +108,13 @@ const Register = () => {
             </Block>  
               {/* form inputs */}
               <Block paddingHorizontal={sizes.sm}>
-              <Block>
-                  <Image 
-                  resizeMode='stretch'
-                  source={assets.profile}
-                  height={30}
-                  width={35}
-                  color={colors.icon}
-                  style={{position: 'absolute' ,top:33,left:-5}}
-                  />
-                <Input
-                  autoCapitalize="none"
-                  marginBottom={sizes.m}
-                  paddingLeft={40}
-                  label={t('common.name')}
-                  placeholder={t('common.namePlaceholder')}
-                  success={Boolean(registration.fullName && isValid.fullName)}
-                  danger={Boolean(registration.fullName && !isValid.fullName)}
-                  onChangeText={(value) => handleChange({fullName: value})}
-                />
-                </Block>
                <Block>
                   <Image 
                   resizeMode='stretch'
                     source={assets.mail}
                     height={25}
                     width={23}
+                    marginBottom={sizes.m}
                     color={colors.icon}
                     style={{position: 'absolute' ,top:40}}
                   />
@@ -161,7 +142,7 @@ const Register = () => {
                 <Input
                   secureTextEntry
                   autoCapitalize="none"
-                  marginBottom={sizes.s}
+                  marginBottom={sizes.m}
                   label={t('common.password')}
                   paddingLeft={40}
                   placeholder={t('common.passwordPlaceholder')}
@@ -169,35 +150,43 @@ const Register = () => {
                   success={Boolean(registration.password && isValid.password)}
                   danger={Boolean(registration.password && !isValid.password)}
                 />
+                <TouchableOpacity onPress={() => navigation.navigate('ResetPassword')}>
+                <Text align='center'>
+                  {t('common.forgotPassword')}
+                </Text>
+                </TouchableOpacity>
                 </Block>
               </Block>
-              {/* checkbox terms */}
-{/*               <Block row flex={0} align="center" paddingHorizontal={sizes.sm}>
-                <Checkbox
-                  marginRight={sizes.sm}
-                  checked={registration?.agreed}
-                  onPress={(value) => handleChange({agreed: value})}
-                />
-                <Text paddingRight={sizes.s}>
-                  {t('common.agree')}
-                  <Text
-                    semibold
-                    onPress={() => {
-                      Linking.openURL('https://zyeutissi.fr/');
-                    }}>
-                    {t('common.terms')}
-                  </Text>
-                </Text>
-              </Block> */}
+              <Block row paddingVertical={sizes.m}>
               <Button
-                onPress={handleSignUp}
-                marginVertical={sizes.md}
+                onPress={handleSignIn}                
                 marginHorizontal={sizes.sm}
+                height={50}
+                width={200}
                 gradient={gradients.primary}
-                // Object.values(isValid).includes(false)
-                disabled={Object.values(isValid).includes(false)}
-                >
+                disabled={Object.values(isValid).includes(false)}>
                 <Text bold white transform="uppercase">
+                  {t('common.signin')}
+                </Text>
+              </Button>
+              
+              <Button radius={sizes.m} style={{width:5, height:5}} outlined color={colors.blue} shadow={!isAndroid} onPress={handleSignUpWithGoogle}>
+                  <Image
+                  style={{alignSelf:'center'}}
+                    source={assets.google}
+                    height={sizes.m}
+                    width={sizes.m}
+                    color={colors.blue}
+                  />
+              </Button>
+              </Block>
+              <Button
+                primary
+                outlined
+                shadow={!isAndroid}
+                marginHorizontal={sizes.sm}
+                onPress={() => navigation.navigate('Register')}>
+                <Text bold primary transform="uppercase">
                   {t('common.signup')}
                 </Text>
               </Button>
@@ -208,4 +197,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Login;

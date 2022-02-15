@@ -66,6 +66,7 @@ export interface IBlockProps
    * Renders a ScrollView component
    * @see https://reactnative.dev/docs/scrollview
    */
+   WithoutScroll?: boolean;
   scroll?: boolean;
   /**
    * Generates a shadow style
@@ -412,11 +413,6 @@ export interface IButtonProps extends TouchableOpacityProps, ISpacing {
    */
   bottom?: ViewStyle['bottom'];
   /**
-   * Provides haptic feedback on touch - Haptics.selectionAsync()
-   * @see https://docs.expo.io/versions/latest/sdk/haptics/
-   */
-  haptic?: boolean;
-  /**
    * Adds vibration feedback on touch using Vibration.vibrate pattern
    * @see https://reactnative.dev/docs/vibration
    */
@@ -449,11 +445,6 @@ export interface ICheckboxProps extends ISpacing {
    * Checkbox checked value
    */
   checked?: boolean;
-  /**
-   * Provides haptic feedback when toggling the checkbox
-   * @see https://docs.expo.io/versions/latest/sdk/haptics/
-   */
-  haptic?: boolean;
   /**
    * Renders the Pressable container style
    * @see https://reactnative.dev/docs/view#style
@@ -618,6 +609,7 @@ export interface IInputProps extends TextInputProps, ISpacing {
    * @see https://reactnative.dev/docs/textinput#style
    */
   style?: TextStyle;
+
 }
 
 /**
@@ -692,11 +684,6 @@ export interface ISwitchProps extends ISpacing {
    * Switch onPress callback passing the checked value as params
    */
   onPress?: (checked: boolean) => void;
-  /**
-   * Provides haptic feedback when toggling the switch
-   * @see https://docs.expo.io/versions/latest/sdk/haptics/
-   */
-  haptic?: boolean;
   /**
    * Duration in ms for thumb animated position
    */
@@ -851,6 +838,7 @@ export interface ITextProps extends TextProps, ISpacing {
    * @see https://reactnative.dev/docs/text-style-props#fontsize
    */
   p?: boolean;
+  cat?: boolean;
   /**
    * Renders a Text with custom textAlign
    * @see https://reactnative.dev/docs/text-style-props#textalign

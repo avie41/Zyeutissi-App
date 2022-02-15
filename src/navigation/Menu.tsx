@@ -86,6 +86,8 @@ const DrawerContent = (
   const screens = [
     {name: t('screens.home'), to: 'Home', icon: assets.home},
     {name: t('screens.register'), to: 'Register', icon: assets.register},
+    {name: t('screens.login'), to: 'Login', icon: assets.register},
+    {name: t('screens.profile'), to: 'Profile', icon: assets.profile},
   ];
 
   return (
@@ -96,7 +98,7 @@ const DrawerContent = (
       renderToHardwareTextureAndroid
       contentContainerStyle={{paddingBottom: sizes.padding}}>
       <Block paddingHorizontal={sizes.padding}>
-        <Block flex={0} row align="center" marginBottom={sizes.l}>
+        <Block flex={0} row align="center" marginBottom={sizes.l} marginTop={sizes.l}>
           <Image
             radius={0}
             width={33}
@@ -105,8 +107,8 @@ const DrawerContent = (
             source={assets.zyeutissi}
             marginRight={sizes.sm}
           />
-          <Block>
-            <Text size={20} semibold>
+          <Block marginTop={sizes.s}>
+            <Text size={22} semibold>
               {t('app.name')}
             </Text>
           </Block>
@@ -183,7 +185,35 @@ const DrawerContent = (
             />
           </Block>
           <Text p color={labelColor}>
-            {t('menu.started')}
+            {t('menu.website')}
+          </Text>
+        </Button>
+        <Button
+          row
+          justify="flex-start"
+          marginBottom={sizes.s}
+          onPress={() =>
+            navigation.navigate('Concept')
+          }>
+          <Block
+            flex={0}
+            radius={6}
+            align="center"
+            justify="center"
+            width={sizes.md}
+            height={sizes.md}
+            marginRight={sizes.s}
+            gradient={gradients.white}>
+            <Image
+              radius={0}
+              width={18}
+              height={18}
+              color={colors.black}
+              source={assets.help}
+            />
+          </Block>
+          <Text p color={labelColor}>
+            {t('menu.concept')}
           </Text>
         </Button> 
       </Block>

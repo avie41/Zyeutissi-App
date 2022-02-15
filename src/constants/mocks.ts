@@ -168,10 +168,9 @@ export const TRENDING: IProduct[] = [
 
 // categories
 export const CATEGORIES: ICategory[] = [
-  {id: 1, name: 'Popular'},
-  {id: 2, name: 'Newest'},
-  {id: 3, name: 'Fashion'},
-  {id: 4, name: 'Best deal'},
+  {id: 1, name: 'Populaire'},
+  {id: 2, name: 'Récent'},
+  {id: 3, name: 'Paysage'},
 ];
 
 // article options

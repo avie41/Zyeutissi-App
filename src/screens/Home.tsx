@@ -48,13 +48,18 @@ return (
           const isSelected = category?.id === selected?.id;
           return (
             <Button
+
+              width={110}
               radius={sizes.m}
+              marginTop={sizes.md}
+              paddingBottom={0}
+              marginBottom={sizes.s + 5}
               marginHorizontal={sizes.s}
               key={`category-${category?.id}}`}
               onPress={() => setSelected(category)}
               gradient={gradients?.[isSelected ? 'primary' : 'light']}>
               <Text
-                p
+                cat
                 bold={isSelected}
                 white={isSelected}
                 black={!isSelected}

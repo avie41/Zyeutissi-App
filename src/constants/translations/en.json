@@ -30,7 +30,9 @@
     "email": "Email",
     "emailPlaceholder": "Enter your email address",
     "password": "Password",
+    "forgotPassword": "forgot password ?",
     "passwordPlaceholder": "Enter a password",
+    "resetPassword": "Reset password",
     "agree": "I agree with the ",
     "terms": "Terms and Conditions",
     "signup": "Sign Up",
@@ -63,6 +65,7 @@
     "profile": "Profile",
     "settings": "Settings",
     "register": "Create account",
+    "login": "login account",
     "extra": "Extra - Automotive"
   },
   "navigation": {
@@ -86,7 +89,9 @@
   },
   "menu": {
     "started": "Getting Started",
-    "documentation": "Documentation"
+    "website": "Website",
+    "documentation": "Documentation",
+    "concept": "Concept"
   },
   "home": {
     "title": "Soft UI",

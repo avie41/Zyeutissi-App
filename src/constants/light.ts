@@ -109,6 +109,7 @@ export const SIZES: ThemeSizes = {
   h4: 24,
   h5: 18,
   p: 16,
+  cat: 13,
 
   // button sizes
   buttonBorder: 1,

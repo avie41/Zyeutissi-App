@@ -1,4 +1,5 @@
 import React, {useCallback, useState} from 'react';
+import Icon from 'react-native-ionicons'
 import {
   Image,
   TextInput,
@@ -13,6 +14,8 @@ import Text from './Text';
 
 import useTheme from '../hooks/useTheme';
 import {IInputProps} from '../constants/types';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const Input = ({
   id = 'Input',
