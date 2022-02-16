@@ -1,15 +1,14 @@
-import React, { useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { useFonts } from 'expo-font';
 import AppLoading from 'expo-app-loading';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
-
-
-import Menu from './Menu';
 import { useData, ThemeProvider, TranslationProvider } from '../hooks';
+import React from 'react';
+import Menu from './Menu';
+
+
 export default () => {
   const { isDark, theme, setTheme } = useData();
-
 
   // load custom fonts
   const [fontsLoaded] = useFonts({
@@ -40,15 +39,16 @@ export default () => {
       background: String(theme.colors.background),
     },
   };
-
+  
   return (
     <TranslationProvider>
       <ThemeProvider theme={theme} setTheme={setTheme}>
         <StatusBar translucent backgroundColor="transparent" />
         <NavigationContainer theme={navigationTheme}>
-          <Menu />
+          <Menu/>
         </NavigationContainer>
       </ThemeProvider>
     </TranslationProvider>
   );
+
 };

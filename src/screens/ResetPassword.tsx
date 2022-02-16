@@ -5,10 +5,12 @@ import { useNavigation } from '@react-navigation/core';
 import * as regex from '../constants/regex';
 import { Block, Button, Input, Image, Text, Modal } from '../components';
 import { useTheme, useTranslation } from '../hooks';
+import { getAuth, sendPasswordResetEmail } from 'firebase/auth';
 
 const isAndroid = Platform.OS === 'android';
 
 const ResetPassword = () => {
+  const auth = getAuth();
   const { t } = useTranslation();
   const navigation = useNavigation();
   const [isValid, setIsValid] = useState(false);
@@ -25,10 +27,9 @@ const ResetPassword = () => {
 
   const handleSubmit = useCallback(() => {
     if (isValid) {
-      console.log("reset password with mail");
-      //resetPassword(mail);
+      sendPasswordResetEmail(auth, mail)
       setModal(true);
-      navigation.navigate('Login');
+      //navigation.navigate('Login');
     }
   }, [isValid, setModal]);
 

@@ -1,12 +1,14 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { KeyboardAvoidingView, Linking, Platform, View } from 'react-native';
 import { useNavigation } from '@react-navigation/core';
-//import {registerNewUser} from '../services/firebaseMethods';
+import { getAuth, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { useData, useTheme, useTranslation } from '../hooks/';
 import * as regex from '../constants/regex';
 import { Block, Button, Input, Image, Text, Checkbox } from '../components/';
 import { block } from 'react-native-reanimated';
 
+
+const auth = getAuth();
 const isAndroid = Platform.OS === 'android';
 
 interface IRegistration {
@@ -46,10 +48,21 @@ const Register = () => {
     [setRegistration],
   );
 
-  const handleSignUp = useCallback(() => {
+  const handleSignUp = useCallback(async () => {
     if (!Object.values(isValid).includes(false)) {
-      console.log("register!");
-      //registerNewUser(registration.fullName,registration.email,registration.password);
+      try {
+        console.log(auth);
+        await createUserWithEmailAndPassword(auth, registration.email, registration.password);
+        console.log(auth);
+        await updateProfile(auth.currentUser, { displayName: registration.fullName });
+        console.log("register");
+        console.log(auth);
+      } catch (error) {
+        setRegistration({
+          ...registration,
+        })
+        alert(error.message);
+      }
     }
   }, [isValid, registration]);
 
@@ -195,8 +208,7 @@ const Register = () => {
               marginVertical={sizes.md}
               marginHorizontal={sizes.sm}
               gradient={gradients.primary}
-              // Object.values(isValid).includes(false)
-              disabled={Object.values(isValid).includes(false)}
+            //disabled={Object.values(isValid).includes(false)}
             >
               <Text bold white transform="uppercase">
                 {t('common.signup')}

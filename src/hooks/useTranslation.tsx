@@ -1,6 +1,6 @@
 import i18n from 'i18n-js';
 import * as Localization from 'expo-localization';
-import Storage from '@react-native-async-storage/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {useCallback, useContext, useEffect, useState} from 'react';
 
 import translations from '../constants/translations/';
@@ -32,7 +32,7 @@ export const TranslationProvider = ({
   // get locale from storage
   const getLocale = useCallback(async () => {
     // get preferance gtom storage
-    const localeJSON = await Storage.getItem('locale');
+    const localeJSON = await AsyncStorage.getItem('locale');
 
     // set Locale / compare if has updated
     setLocale(localeJSON !== null ? localeJSON : Localization.locale);
@@ -44,7 +44,7 @@ export const TranslationProvider = ({
 
   useEffect(() => {
     // save preferance to storage
-    Storage.setItem('locale', locale);
+    AsyncStorage.setItem('locale', locale);
   }, [locale]);
 
   const contextValue = {

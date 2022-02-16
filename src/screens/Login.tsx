@@ -1,11 +1,14 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { TouchableOpacity, KeyboardAvoidingView, Linking, Platform, View } from 'react-native';
 import { useNavigation } from '@react-navigation/core';
-//import { signIn, signInWithGoogle } from '../services/firebaseMethods';
 import { useTheme, useTranslation } from '../hooks';
 import * as regex from '../constants/regex';
 import { Block, Button, Input, Image, Text, Checkbox } from '../components';
-import firebase from 'firebase';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import * as Google from 'expo-auth-session/providers/google';
+import * as WebBrowser from 'expo-web-browser';
+
+
 
 const isAndroid = Platform.OS === 'android';
 
@@ -17,10 +20,11 @@ interface IRegistrationValidation {
   email: boolean;
   password: boolean;
 }
-
+WebBrowser.maybeCompleteAuthSession();
 const Login = () => {
   const { t } = useTranslation();
   const navigation = useNavigation();
+  const auth = getAuth();
   // TODO toggle eye to be implemented
   //const [hidePassword, setHidePassword] = useState(true);
   const [isValid, setIsValid] = useState<IRegistrationValidation>({
@@ -32,7 +36,28 @@ const Login = () => {
     password: ''
   });
   const { assets, colors, gradients, sizes } = useTheme();
-
+  const [accessToken, setAccessToken] = useState();
+  const [userInfo, setUserInfo] = useState();
+  const [request, response, promptAsync] = Google.useAuthRequest({
+    androidClientId: "281151332018-a13u2ar30h7ep8ch1tpobeab78v2g80o.apps.googleusercontent.com",
+    iosClientId: "281151332018-unfr1to4jbpe4dttpjj6hlpi0lqekc9g.apps.googleusercontent.com",
+    expoClientId: "281151332018-ncguue3pp1igp284gpgl71vh0aihduhh.apps.googleusercontent.com"
+  });
+  useEffect(() => {
+    if (response?.type === "success") {
+      setAccessToken(response.authentication.accessToken);
+    }
+  }, [response]);
+  async function getUserData() {
+    let userInfoResponse = await fetch("https://www.googleapis.com/oauth2/v1/userinfo", {
+      headers: { Authorization: `Bearer ${accessToken}` }
+    });
+    console.log(userInfoResponse);
+    /*     userInfoResponse.json().then(data => {
+          setUserInfo(data);
+          console.log(userInfo.email);
+        }); */
+  }
   const handleChange = useCallback(
     (value) => {
       setRegistration((state) => ({ ...state, ...value }));
@@ -40,21 +65,18 @@ const Login = () => {
     [setRegistration],
   );
 
-  const handleSignIn = useCallback(() => {
+  const handleSignIn = useCallback(async () => {
     if (!Object.values(isValid).includes(false)) {
       /** send/save registratin data */
-      console.log("Sign in");
-      //signIn(registration.email, registration.password);
-      navigation.navigate('Home');
+      try {
+        await signInWithEmailAndPassword(auth, registration.email, registration.password);
+
+      } catch (error) {
+        alert(error.message);
+      }
+
     }
   }, [isValid, registration]);
-
-  const handleSignUpWithGoogle = () => {
-    console.log("sign in with google");
-    //var provider = new firebase.auth.GoogleAuthProvider();
-    //signInWithGoogle(provider);
-    navigation.navigate('Home');
-  }
 
   useEffect(() => {
     setIsValid((state) => ({
@@ -172,7 +194,12 @@ const Login = () => {
                 </Text>
               </Button>
 
-              <Button radius={sizes.m} style={{ width: 5, height: 5 }} outlined color={colors.blue} shadow={!isAndroid} onPress={handleSignUpWithGoogle}>
+              <Button
+                onPress={accessToken ? getUserData : () => { promptAsync({ showInRecents: true }) }}
+                radius={sizes.m}
+                style={{ width: 5, height: 5 }}
+                outlined color={colors.blue}
+                shadow={!isAndroid}>
                 <Image
                   style={{ alignSelf: 'center' }}
                   source={assets.google}

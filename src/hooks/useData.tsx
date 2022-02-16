@@ -1,5 +1,5 @@
 import React, {useCallback, useContext, useEffect, useState} from 'react';
-import Storage from '@react-native-async-storage/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {
   IArticle,
@@ -35,7 +35,7 @@ export const DataProvider = ({children}: {children: React.ReactNode}) => {
   // get isDark mode from storage
   const getIsDark = useCallback(async () => {
     // get preferance gtom storage
-    const isDarkJSON = await Storage.getItem('isDark');
+    const isDarkJSON = await AsyncStorage.getItem('isDark');
 
     if (isDarkJSON !== null) {
       // set isDark / compare if has updated
@@ -49,7 +49,7 @@ export const DataProvider = ({children}: {children: React.ReactNode}) => {
       // set isDark / compare if has updated
       setIsDark(payload);
       // save preferance to storage
-      Storage.setItem('isDark', JSON.stringify(payload));
+      AsyncStorage.setItem('isDark', JSON.stringify(payload));
     },
     [setIsDark],
   );
