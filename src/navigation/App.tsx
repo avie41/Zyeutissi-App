@@ -4,11 +4,14 @@ import AppLoading from 'expo-app-loading';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { useData, ThemeProvider, TranslationProvider } from '../hooks';
 import React from 'react';
-import Menu from './Menu';
+import HomePage from './Home';
+import AuthStack from './AuthStack';
+import { useAuthentication } from '../hooks/useAuthentication';
 
 
 export default () => {
   const { isDark, theme, setTheme } = useData();
+  const { user } = useAuthentication();
 
   // load custom fonts
   const [fontsLoaded] = useFonts({
@@ -39,13 +42,24 @@ export default () => {
       background: String(theme.colors.background),
     },
   };
-  
+  if (user) {
+    return (
+      <TranslationProvider>
+        <ThemeProvider theme={theme} setTheme={setTheme}>
+          <StatusBar translucent backgroundColor="transparent" />
+          <NavigationContainer theme={navigationTheme}>
+            <HomePage />
+          </NavigationContainer>
+        </ThemeProvider>
+      </TranslationProvider>
+    );
+  }
   return (
     <TranslationProvider>
       <ThemeProvider theme={theme} setTheme={setTheme}>
         <StatusBar translucent backgroundColor="transparent" />
         <NavigationContainer theme={navigationTheme}>
-          <Menu/>
+          <AuthStack />
         </NavigationContainer>
       </ThemeProvider>
     </TranslationProvider>

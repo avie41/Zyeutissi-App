@@ -8,17 +8,21 @@ import {
   DrawerContentOptions,
   DrawerContentScrollView,
 } from '@react-navigation/drawer';
+import { StatusBar, setStatusBarHidden } from 'expo-status-bar';
+import Screens from './UserScreens';
+import { Block, Text, Button, Image } from '../components';
+import { useTheme, useTranslation } from '../hooks';
+import { getAuth, signOut } from 'firebase/auth';
+import { useAuthentication } from '../hooks/useAuthentication';
 
-import Screens from './Screens';
-import { Block, Text, Switch, Button, Image } from '../components';
-import { useData, useTheme, useTranslation } from '../hooks';
-
+const auth = getAuth();
 const Drawer = createDrawerNavigator();
 
 /* drawer menu screens navigation */
 const ScreensStack = () => {
   const { colors } = useTheme();
   const isDrawerOpen = useDrawerStatus() === 'open';
+
   const animation = useRef(new Animated.Value(0)).current;
 
   const scale = animation.interpolate({
@@ -63,9 +67,9 @@ const ScreensStack = () => {
 const DrawerContent = (
   props: DrawerContentComponentProps<DrawerContentOptions>,
 ) => {
+  const { user } = useAuthentication();
   const { navigation } = props;
   const { t } = useTranslation();
-  const { isDark, handleIsDark } = useData();
   const [active, setActive] = useState('Home');
   const { assets, colors, gradients, sizes } = useTheme();
   const labelColor = colors.text;
@@ -82,9 +86,6 @@ const DrawerContent = (
 
   // screen list for Drawer menu
   const screens = [
-    { name: t('screens.home'), to: 'Home', icon: assets.home },
-    { name: t('screens.register'), to: 'Register', icon: assets.register },
-    { name: t('screens.login'), to: 'Login', icon: assets.register },
     { name: t('screens.profile'), to: 'Profile', icon: assets.profile },
   ];
 
@@ -107,7 +108,7 @@ const DrawerContent = (
           />
           <Block marginTop={sizes.s}>
             <Text size={22} semibold>
-              {t('app.name')}
+              {t('register.title')} {user?.displayName}
             </Text>
           </Block>
         </Block>
@@ -142,9 +143,37 @@ const DrawerContent = (
                 {screen.name}
               </Text>
             </Button>
+            
           );
         })}
-
+                <Button
+          row
+          justify="flex-start"
+          marginTop={sizes.sm}
+          marginBottom={sizes.s}
+          onPress={() => signOut(auth)
+          }>
+          <Block
+            flex={0}
+            radius={6}
+            align="center"
+            justify="center"
+            width={sizes.md}
+            height={sizes.md}
+            marginRight={sizes.s}
+            gradient={gradients.white}>
+            <Image
+              radius={0}
+              width={14}
+              height={14}
+              color={colors.black}
+              source={assets.close}
+            />
+          </Block>
+          <Text p color={labelColor}>
+            {t('navigation.logout')}
+          </Text>
+        </Button>
         <Block
           flex={0}
           height={1}
@@ -221,6 +250,7 @@ const DrawerContent = (
 
 /* drawer menu navigation */
 export default () => {
+  const { user } = useAuthentication();
   const { gradients } = useTheme();
 
   return (

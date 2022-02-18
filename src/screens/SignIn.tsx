@@ -1,45 +1,67 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { KeyboardAvoidingView, Linking, Platform, View } from 'react-native';
+import { TouchableOpacity, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/core';
-import { getAuth, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
-import { useData, useTheme, useTranslation } from '../hooks/';
+import { useTheme, useTranslation } from '../hooks';
 import * as regex from '../constants/regex';
-import { Block, Button, Input, Image, Text, Checkbox } from '../components/';
-import { block } from 'react-native-reanimated';
+import { Block, Button, Input, Image, Text } from '../components';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import * as Google from 'expo-auth-session/providers/google';
+import * as WebBrowser from 'expo-web-browser';
 
 
-const auth = getAuth();
+
 const isAndroid = Platform.OS === 'android';
+const auth = getAuth();
 
 interface IRegistration {
-  fullName: string;
   email: string;
   password: string;
-  // agreed: boolean;
 }
 interface IRegistrationValidation {
-  fullName: boolean;
   email: boolean;
   password: boolean;
-  // agreed: boolean;
 }
-
-const Register = () => {
+WebBrowser.maybeCompleteAuthSession();
+const Login = () => {
   const { t } = useTranslation();
   const navigation = useNavigation();
+  // TODO toggle eye to be implemented
+  // const [hidePassword, setHidePassword] = useState(true);
   const [isValid, setIsValid] = useState<IRegistrationValidation>({
-    fullName: false,
     email: false,
-    password: false,
-    // agreed: false,
+    password: false
   });
   const [registration, setRegistration] = useState<IRegistration>({
-    fullName: '',
     email: '',
-    password: '',
-    // agreed: false,
+    password: ''
   });
   const { assets, colors, gradients, sizes } = useTheme();
+
+  /* Google auth
+
+  const [accessToken, setAccessToken] = useState();
+  const [userInfo, setUserInfo] = useState();
+  const [request, response, promptAsync] = Google.useAuthRequest({
+    androidClientId: "281151332018-a13u2ar30h7ep8ch1tpobeab78v2g80o.apps.googleusercontent.com",
+    iosClientId: "281151332018-unfr1to4jbpe4dttpjj6hlpi0lqekc9g.apps.googleusercontent.com",
+    expoClientId: "281151332018-ncguue3pp1igp284gpgl71vh0aihduhh.apps.googleusercontent.com"
+  
+  });
+  useEffect(() => {
+    if (response?.type === "success") {
+      setAccessToken(response.authentication.accessToken);
+    }
+  }, [response]);
+  async function getUserData() {
+    let userInfoResponse = await fetch("https://www.googleapis.com/oauth2/v1/userinfo", {
+      headers: { Authorization: `Bearer ${accessToken}` }
+    });
+    console.log(userInfoResponse);
+          userInfoResponse.json().then(data => {
+          setUserInfo(data);
+          console.log(userInfo.email);
+        });
+  */
 
   const handleChange = useCallback(
     (value) => {
@@ -48,56 +70,31 @@ const Register = () => {
     [setRegistration],
   );
 
-  const handleSignUp = useCallback(async () => {
+  const handleSignIn = useCallback(async () => {
     if (!Object.values(isValid).includes(false)) {
+      /** send/save registratin data */
       try {
-        console.log(auth);
-        await createUserWithEmailAndPassword(auth, registration.email, registration.password);
-        console.log(auth);
-        await updateProfile(auth.currentUser, { displayName: registration.fullName });
-        console.log("register");
-        console.log(auth);
+
+        await signInWithEmailAndPassword(auth, registration.email, registration.password);
+
       } catch (error) {
-        setRegistration({
-          ...registration,
-        })
         alert(error.message);
       }
+
     }
   }, [isValid, registration]);
 
   useEffect(() => {
     setIsValid((state) => ({
       ...state,
-      fullName: regex.name.test(registration.fullName),
       email: regex.email.test(registration.email),
       password: regex.password.test(registration.password),
-      // agreed: registration.agreed,
     }));
   }, [registration, setIsValid]);
 
   return (
     <Block safe marginTop={sizes.md}>
       <Block paddingHorizontal={sizes.sm} paddingVertical={sizes.sm}>
-        <Block flex={0} style={{ zIndex: 0 }}>
-          <Button
-            row
-            flex={0}
-            justify="flex-start"
-            onPress={() => navigation.goBack()}>
-            <Image
-              radius={0}
-              width={10}
-              height={18}
-              color={colors.blue}
-              source={assets.arrow}
-              transform={[{ rotate: '180deg' }]}
-            />
-            <Text p white marginLeft={sizes.s} color={colors.blue}>
-              {t('common.goBack')}
-            </Text>
-          </Button>
-        </Block>
         {/* register form */}
         <Block
           keyboard
@@ -125,29 +122,10 @@ const Register = () => {
               <Block>
                 <Image
                   resizeMode='stretch'
-                  source={assets.profile}
-                  height={30}
-                  width={35}
-                  color={colors.icon}
-                  style={{ position: 'absolute', top: 33, left: -5 }}
-                />
-                <Input
-                  autoCapitalize="none"
-                  marginBottom={sizes.m}
-                  paddingLeft={40}
-                  label={t('common.name')}
-                  placeholder={t('common.namePlaceholder')}
-                  success={Boolean(registration.fullName && isValid.fullName)}
-                  danger={Boolean(registration.fullName && !isValid.fullName)}
-                  onChangeText={(value) => handleChange({ fullName: value })}
-                />
-              </Block>
-              <Block>
-                <Image
-                  resizeMode='stretch'
                   source={assets.mail}
                   height={25}
                   width={23}
+                  marginBottom={sizes.m}
                   color={colors.icon}
                   style={{ position: 'absolute', top: 40 }}
                 />
@@ -175,7 +153,7 @@ const Register = () => {
                 <Input
                   secureTextEntry
                   autoCapitalize="none"
-                  marginBottom={sizes.s}
+                  marginBottom={sizes.m}
                   label={t('common.password')}
                   paddingLeft={40}
                   placeholder={t('common.passwordPlaceholder')}
@@ -183,34 +161,48 @@ const Register = () => {
                   success={Boolean(registration.password && isValid.password)}
                   danger={Boolean(registration.password && !isValid.password)}
                 />
+                <TouchableOpacity onPress={() => navigation.navigate("ResetPassword")}>
+                  <Text align='center'>
+                    {t('common.forgotPassword')}
+                  </Text>
+                </TouchableOpacity>
               </Block>
             </Block>
-            {/* checkbox terms */}
-            {/*               <Block row flex={0} align="center" paddingHorizontal={sizes.sm}>
-                <Checkbox
-                  marginRight={sizes.sm}
-                  checked={registration?.agreed}
-                  onPress={(value) => handleChange({agreed: value})}
-                />
-                <Text paddingRight={sizes.s}>
-                  {t('common.agree')}
-                  <Text
-                    semibold
-                    onPress={() => {
-                      Linking.openURL('https://zyeutissi.fr/');
-                    }}>
-                    {t('common.terms')}
-                  </Text>
+            <Block row paddingVertical={sizes.m}>
+              <Button
+                onPress={handleSignIn}
+                marginHorizontal={sizes.sm}
+                height={50}
+                width={200}
+                gradient={gradients.primary}
+                disabled={Object.values(isValid).includes(false)}>
+                <Text bold white transform="uppercase">
+                  {t('common.signin')}
                 </Text>
-              </Block> */}
+              </Button>
+
+              <Button
+                // onPress={accessToken ? getUserData : () => { promptAsync({ showInRecents: true }) }}
+                radius={sizes.m}
+                style={{ width: 5, height: 5 }}
+                outlined color={colors.blue}
+                shadow={!isAndroid}>
+                <Image
+                  style={{ alignSelf: 'center' }}
+                  source={assets.google}
+                  height={sizes.m}
+                  width={sizes.m}
+                  color={colors.blue}
+                />
+              </Button>
+            </Block>
             <Button
-              onPress={handleSignUp}
-              marginVertical={sizes.md}
+              primary
+              outlined
+              shadow={!isAndroid}
               marginHorizontal={sizes.sm}
-              gradient={gradients.primary}
-            //disabled={Object.values(isValid).includes(false)}
-            >
-              <Text bold white transform="uppercase">
+              onPress={() => navigation.navigate("SignUp")}>
+              <Text bold primary transform="uppercase">
                 {t('common.signup')}
               </Text>
             </Button>
@@ -221,4 +213,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Login;

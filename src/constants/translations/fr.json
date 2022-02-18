@@ -61,7 +61,8 @@
     "about": "A propos",
     "privacy": "Confidentialité",
     "register": "S'enregistrer",
-    "login": "Se connecter"
+    "login": "Se connecter",
+    "logout": "Se déconnecter"
   },
   "menu": {
     "started": "Comment ça marche",
