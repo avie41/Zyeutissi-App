@@ -13,7 +13,7 @@ export const TranslationProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [locale, setLocale] = useState('en');
+  const [locale, setLocale] = useState('fr');
 
   // Set the locale once at the beginning of your app.
   i18n.locale = locale;
@@ -32,6 +32,7 @@ export const TranslationProvider = ({
   // get locale from storage
   const getLocale = useCallback(async () => {
     // get preferance gtom storage
+
     const localeJSON = await AsyncStorage.getItem('locale');
 
     // set Locale / compare if has updated

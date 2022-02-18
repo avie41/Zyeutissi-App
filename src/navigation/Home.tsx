@@ -86,7 +86,8 @@ const DrawerContent = (
 
   // screen list for Drawer menu
   const screens = [
-    { name: t('screens.profile'), to: 'Profile', icon: assets.profile },
+    { name: t('screens.switchMode'), to: 'SwitchMode', icon: assets.switch },
+    { name: t('screens.settings'), to: 'ToDevelop', icon: assets.settings },
   ];
 
   return (
@@ -129,12 +130,12 @@ const DrawerContent = (
                 justify="center"
                 width={sizes.md}
                 height={sizes.md}
-                marginRight={sizes.s}
+                marginRight={sizes.sm}
                 gradient={gradients[isActive ? 'primary' : 'white']}>
                 <Image
                   radius={0}
-                  width={14}
-                  height={14}
+                  width={16}
+                  height={16}
                   source={screen.icon}
                   color={colors[isActive ? 'white' : 'black']}
                 />
@@ -160,14 +161,14 @@ const DrawerContent = (
             justify="center"
             width={sizes.md}
             height={sizes.md}
-            marginRight={sizes.s}
+            marginRight={sizes.sm}
             gradient={gradients.white}>
             <Image
               radius={0}
               width={14}
               height={14}
               color={colors.black}
-              source={assets.close}
+              source={assets.logout}
             />
           </Block>
           <Text p color={labelColor}>
@@ -201,7 +202,7 @@ const DrawerContent = (
             justify="center"
             width={sizes.md}
             height={sizes.md}
-            marginRight={sizes.s}
+            marginRight={sizes.sm}
             gradient={gradients.white}>
             <Image
               radius={0}
@@ -229,7 +230,7 @@ const DrawerContent = (
             justify="center"
             width={sizes.md}
             height={sizes.md}
-            marginRight={sizes.s}
+            marginRight={sizes.sm}
             gradient={gradients.white}>
             <Image
               radius={0}
@@ -250,7 +251,6 @@ const DrawerContent = (
 
 /* drawer menu navigation */
 export default () => {
-  const { user } = useAuthentication();
   const { gradients } = useTheme();
 
   return (

@@ -1,7 +1,7 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 
-import { Home, Profile, ToDevelop, Concept} from '../screens';
+import { Home, Profile, ToDevelop, SwitchMode, Concept} from '../screens';
 import {useScreenOptions, useTranslation} from '../hooks';
 
 const Stack = createStackNavigator();
@@ -11,7 +11,7 @@ export default () => {
   const screenOptions = useScreenOptions();
 
   return (
-    <Stack.Navigator screenOptions={screenOptions.stack}>
+    <Stack.Navigator initialRouteName= "SwitchMode" screenOptions={screenOptions.stack}>
       <Stack.Screen
         name="Home"
         component={Home}
@@ -19,8 +19,8 @@ export default () => {
       />
 
       <Stack.Screen
-        name="Profile"
-        component={Profile}
+        name="SwitchMode"
+        component={SwitchMode}
         options={{headerShown: false}}
       />
 

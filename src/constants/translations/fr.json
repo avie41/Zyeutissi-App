@@ -45,12 +45,9 @@
   },
   "screens": {
     "home": "Page d'accueil",
-    "articles": "Articles",
+    "switchMode": "Changer de mode",
     "profile": "Page profil",
     "settings": "Paramètres",
-    "register": "Page de création de compte",
-    "login": "Page de connexion",
-    "extra": "Extra - Automotive"
   },
   "navigation": {
     "home": "Accueil",

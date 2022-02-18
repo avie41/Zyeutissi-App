@@ -174,8 +174,7 @@ const Login = () => {
                 marginHorizontal={sizes.sm}
                 height={50}
                 width={200}
-                gradient={gradients.primary}
-                disabled={Object.values(isValid).includes(false)}>
+                gradient={gradients.primary}              >
                 <Text bold white transform="uppercase">
                   {t('common.signin')}
                 </Text>

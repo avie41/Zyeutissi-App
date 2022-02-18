@@ -44,6 +44,9 @@ export const ICONS: ThemeIcons = {
   check: require('../assets/icons/check.png'),
   clock: require('../assets/icons/clock.png'),
   close: require('../assets/icons/close.png'),
+  logout: require('../assets/icons/logout.png'),
+  switch: require('../assets/icons/switch.png'),
+  
   components: require('../assets/icons/components.png'),
   document: require('../assets/icons/document.png'),
   documentation: require('../assets/icons/documentation.png'),
@@ -65,13 +68,15 @@ export const ICONS: ThemeIcons = {
   register: require('../assets/icons/register.png'),
   rental: require('../assets/icons/rental.png'),
   search: require('../assets/icons/search.png'),
-  settings: require('../assets/icons/settings.png'),
+  settings: require('../assets/icons/settingsF.png'),
   star: require('../assets/icons/star.png'),
   train: require('../assets/icons/train.png'),
   users: require('../assets/icons/users.png'),
   warning: require('../assets/icons/warning.png'),
   eye: require('../assets/icons/eye.png'),
   eyeOff: require('../assets/icons/eye-off.png'),
+  transmettre: require('../assets/images/T.png'),
+  zyeuter: require('../assets/images/Z.png'),
 };
 
 export const ASSETS: ThemeAssets = {

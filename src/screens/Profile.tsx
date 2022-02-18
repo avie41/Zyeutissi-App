@@ -22,7 +22,7 @@ const Profile = () => {
     (sizes.width - (IMAGE_VERTICAL_SIZE + sizes.sm) * 2) / 2;
 
   return (
-    <Block safe marginTop={sizes.md}>
+    <Block safe marginTop={sizes.l}>
       <Block
         scroll
         paddingHorizontal={sizes.s}
