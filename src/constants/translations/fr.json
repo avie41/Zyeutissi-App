@@ -47,7 +47,7 @@
     "home": "Page d'accueil",
     "switchMode": "Changer de mode",
     "profile": "Page profil",
-    "settings": "Paramètres",
+    "settings": "Paramètres"
   },
   "navigation": {
     "home": "Accueil",
@@ -59,7 +59,11 @@
     "privacy": "Confidentialité",
     "register": "S'enregistrer",
     "login": "Se connecter",
-    "logout": "Se déconnecter"
+    "logout": "Se déconnecter",
+    "zyeuter": "Zyeuter",
+    "zyeuterDetails": "Visionner nos vidéos",
+    "transmettre": "Transmettre",
+    "transmettreDetails": "Exposer vos vidéos"    
   },
   "menu": {
     "started": "Comment ça marche",

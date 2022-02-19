@@ -61,27 +61,23 @@
     "home": "Home",
     "switchMode": "Switch mode",
     "profile": "Profile",
-    "settings": "Settings",
+    "settings": "Settings"
   },
   "navigation": {
-    "home": "Soft UI",
     "components": "Components",
-    "articles": "Soft UI",
-    "rentals": "Soft UI",
-    "rental": "Best Deal",
-    "booking": "Booking",
     "chat": "Chat",
     "profile": "Profile",
     "settings": "Settings",
     "notifications": "Notifications",
     "agreement": "User Agreement",
     "about": "About",
-    "privacy": "Privacy",
     "register": "Register",
     "login": "Login",
     "logout": "Log out",
-    "extra": "Automotive",
-    "shopping": "Shopping Cart"
+    "zyeuter": "Take a look",
+    "zyeuterDetails": "Watch our videos",
+    "transmettre": "Pass on",
+    "transmettreDetails": "Exhibit your videos"    
   },
   "menu": {
     "started": "Getting Started",
