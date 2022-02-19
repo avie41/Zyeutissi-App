@@ -46,6 +46,7 @@ export const ICONS: ThemeIcons = {
   close: require('../assets/icons/close.png'),
   logout: require('../assets/icons/logout.png'),
   switch: require('../assets/icons/switch.png'),
+  import: require('../assets/icons/import.png'),
   
   components: require('../assets/icons/components.png'),
   document: require('../assets/icons/document.png'),

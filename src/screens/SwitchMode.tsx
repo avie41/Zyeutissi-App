@@ -70,7 +70,7 @@ const SwitchMode = () => {
               color={colors.card}
               padding={sizes.padding}
               width={270}
-              onPress={() => navigation.navigate("ToDevelop")}>
+              onPress={() => navigation.navigate("PassOn")}>
               <Image
                 width={100}
                 height={80}

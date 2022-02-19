@@ -249,6 +249,11 @@ export interface ThemeIcons {
   warning: ImageSourcePropType;
   eye: ImageSourcePropType;
   eyeOff: ImageSourcePropType;
+  logout: ImageSourcePropType;
+  switch: ImageSourcePropType;
+  transmettre: ImageSourcePropType;
+  zyeuter: ImageSourcePropType;
+  import:ImageSourcePropType;
 }
 
 export interface ThemeAssets {
